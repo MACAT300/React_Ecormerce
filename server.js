@@ -19,7 +19,7 @@ app.use(cors());
 async function connectToMongoDB() {
   try {
     // wait for the MongoDB to connect
-    await mongoose.connect("mongodb://localhost:27017/netflix");
+    await mongoose.connect(process.env.MONGODB_URL + "/netflix");
     console.log("MongoDB is Connected");
   } catch (error) {
     console.log(error);
