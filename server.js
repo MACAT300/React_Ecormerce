@@ -1,3 +1,6 @@
+// load the environment variables
+require("dotenv").config();
+
 const express = require("express");
 // import mongoose
 const mongoose = require("mongoose");
@@ -9,6 +12,7 @@ const app = express();
 // setup a middleware to handle JSON request
 app.use(express.json());
 
+// setup cors policy
 app.use(cors());
 
 // connect to MongoDB using Mongoose
@@ -31,10 +35,18 @@ app.get("/", (req, res) => {
 });
 
 // import all the routers
-const productsRouter = require("./routes/product");
-app.use("/products", productsRouter);
+const productRoutes = require("./routes/product");
+app.use("/products", productRoutes);
+app.use("/orders", require("./routes/order"));
+app.use("/payment", require("./routes/payment"));
+app.use("/image", require("./routes/image"));
+app.use("/categories", require("./routes/category"));
+app.use("/users", require("./routes/user"));
+
+// set a folder as a static path
+app.use("/uploads", express.static("uploads"));
 
 // start the express server
-app.listen(5124, () => {
-  console.log("server is running at http://localhost:5124");
+app.listen(5123, () => {
+  console.log("server is running at http://localhost:5123");
 });
